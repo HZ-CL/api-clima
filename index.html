@@ -4,15 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <! script Jquery >
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <! Bootstrap Css>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>API Clima</title>
 
 
+    <! Jquery>
     <script>
         $(document).ready(function() {
+            //Css
+            $("#container").css("margin", "auto");
+            $(".fondo").css("background-image", "url(https://cdn.pixabay.com/photo/2016/01/15/15/37/sky-1141928_960_720.jpg)");
+            $("#pronostico").css("margin", "10px 15%");
+            $(".inputtext").css("border-radius", "5px");
+            $("#container").css("padding", "20px 40px");
+            $("#formulario").css("margin", "10px 15%");
+
+            //captura de datos
             $('form').submit(function() {
-                // your code here (build up your url)
-                $.get(url, function(res) {
+                //var input = document.getElementById("inputcity").value; //optcion 1
+                var input = $("#inputcity").val(); //opcion 2
+                // your code here (build up your url)id=57254dba8220839a35cb12b98dc203a1
+                $.get("http://api.openweathermap.org/data/2.5/weather?q=" + input + ",&&appid=57254dba8220839a35cb12b98dc203a1", function(res) {
                     // your code here
+                    $(".name").html("<h5> Ciudad </h5><p>" + res.name + "</p>");
+                    $(".description").html("<h5>Actualmente: </h5><p>" + res.weather[0].description + "</p>");
+                    $(".temp").html("<h5> Temperatura actual: </h5><p>" + res.main.temp + "º</p>");
+                    $(".temp_max").html("<h5> Temperatura Maxima: </h5><p>" + res.main.temp_max + "º</p>");
+                    $(".temp_min").html("<h5> Temperatura Minima: </h5><p>" + res.main.temp_min + "º</p>");
                 }, 'json');
                 // don't forget to return false so the page doesn't refresh
                 return false;
@@ -23,7 +46,32 @@
 </head>
 
 <body>
-
+    <div id="container" class="col-6 fondo">
+        <div id="formulario">
+            <form>
+                <div class="mb-3">
+                    <h2 class="title_form text-center">El Tiempo</h2>
+                    <input type="text" class="inputtext" id="inputcity" aria-describedby="emailHelp">
+                    <div id="inputcityHelp" class="form-text">Intruduce el nombre de la Ciudad.</div>
+                </div>
+                <button type="submit" class="btn btn-primary">Pronóstico</button>
+            </form>
+        </div>
+        <br>
+        <div id="pronostico">
+            <div class=" name">
+            </div>
+            <div class=" description">
+            </div>
+            <div class=" temp">
+            </div>
+            <div class=" temp_min">
+            </div>
+            <div class=" temp_max">
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </body>
 
 </html>
